@@ -6,15 +6,18 @@
   <title>Chop Search - Goodwood Specials</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f8f9fa; }
-    h1 { color: #28a745; text-align: center; }
-    input, select, button { width: 100%; padding: 12px; margin: 10px 0; font-size: 16px; }
-    button { background: #28a745; color: white; border: none; border-radius: 5px; }
-    .item { padding: 10px; background: white; margin: 5px 0; border-radius: 5px; }
+    h1 { color: #28a745; text-align: center; margin-bottom: 5px; }
+    p { text-align: center; color: #555; }
+    label { display: block; margin: 15px 0 5px; font-weight: bold; }
+    input, select, button { width: 100%; padding: 14px; margin-bottom: 15px; font-size: 16px; border-radius: 8px; border: 1px solid #ddd; }
+    button { background: #28a745; color: white; border: none; font-weight: bold; }
+    .item { padding: 12px; background: white; margin: 8px 0; border-radius: 8px; border-left: 4px solid #28a745; }
+    #results { max-height: 300px; overflow-y: auto; }
   </style>
 </head>
 <body>
   <h1>🍖 Chop Search</h1>
-  <p style="text-align:center">Cheapest prices in Goodwood area</p>
+  <p>Cheapest prices in your area</p>
 
   <label>Your Suburb:</label>
   <select id="area">
@@ -23,27 +26,34 @@
     <option>Thornton</option>
     <option>Kensington</option>
     <option>Bellville</option>
+    <option>Durbanville</option>
+    <option>Plattekloof</option>
+    <option>Struisbaai</option>
   </select>
 
   <label>WhatsApp Number:</label>
   <input type="tel" id="phone" placeholder="083 326 6304" value="083 326 6304">
 
-  <label>Search Product (e.g. milk, boerewors):</label>
+  <label>Search Product (e.g. milk, boerewors, bread):</label>
   <input type="text" id="search" placeholder="Type here..." onkeyup="searchProducts()">
 
   <div id="results"></div>
 
   <div id="selected" style="margin-top:20px"></div>
 
-  <button onclick="saveList()">Save My 20 Items & Get Alerts</button>
+  <button onclick="saveList()">Save My List & Get Alerts</button>
 
   <script>
-    const products = ["Clover Full Cream Milk 2L", "DairyBelle Low Fat Milk", "Boerewors 1kg", "White Bread Loaf", "Eggs 6 Pack", "Chicken Drumsticks"];
+    const products = [
+      "Clover Full Cream Milk 2L", "DairyBelle Low Fat Milk 1L", "Boerewors 1kg", 
+      "White Bread Loaf", "Eggs 6 Pack", "Chicken Drumsticks 1kg", "Rice 2kg",
+      "Potatoes 7kg", "Apples 1kg", "Bananas bunch"
+    ];
     
     let selectedItems = [];
 
     function searchProducts() {
-      const query = document.getElementById("search").value.toLowerCase();
+      const query = document.getElementById("search").value.toLowerCase().trim();
       const resultsDiv = document.getElementById("results");
       resultsDiv.innerHTML = "";
 
@@ -53,14 +63,14 @@
       matches.forEach(item => {
         const div = document.createElement("div");
         div.className = "item";
-        div.innerHTML = item + ' <button onclick="addItem(\'' + item + '\')">Add</button>';
+        div.innerHTML = `${item} <button onclick="addItem('${item}')" style="float:right;">Add</button>`;
         resultsDiv.appendChild(div);
       });
     }
 
     function addItem(item) {
       if (selectedItems.length >= 20) {
-        alert("Maximum 20 items");
+        alert("Maximum 20 items for now");
         return;
       }
       if (!selectedItems.includes(item)) {
@@ -71,17 +81,22 @@
 
     function renderSelected() {
       const div = document.getElementById("selected");
-      div.innerHTML = "<h3>Your List (" + selectedItems.length + "/20)</h3>";
-      selectedItems.forEach(item => {
-        div.innerHTML += `<div class="item">${item}</div>`;
+      div.innerHTML = `<h3>Your List (${selectedItems.length}/20)</h3>`;
+      selectedItems.forEach((item, index) => {
+        div.innerHTML += `<div class="item">${item} <button onclick="removeItem(${index})" style="float:right;color:red;">Remove</button></div>`;
       });
+    }
+
+    function removeItem(index) {
+      selectedItems.splice(index, 1);
+      renderSelected();
     }
 
     function saveList() {
       const area = document.getElementById("area").value;
       const phone = document.getElementById("phone").value;
-      alert("List saved for " + area + "! We will start sending specials to " + phone);
-      // In real version this would send to Google Sheets
+      alert(`✅ List saved for ${area}!\n\nWe will notify you on WhatsApp (${phone}) when your items are on special.`);
+      // Later: send to Google Sheets
     }
   </script>
 </body>
