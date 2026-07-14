@@ -1,1 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chop Search - Goodwood Specials</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f8f9fa; }
+    h1 { color: #28a745; text-align: center; }
+    input, select, button { width: 100%; padding: 12px; margin: 10px 0; font-size: 16px; }
+    button { background: #28a745; color: white; border: none; border-radius: 5px; }
+    .item { padding: 10px; background: white; margin: 5px 0; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h1>🍖 Chop Search</h1>
+  <p style="text-align:center">Cheapest prices in Goodwood area</p>
 
+  <label>Your Suburb:</label>
+  <select id="area">
+    <option>Goodwood</option>
+    <option>Parow</option>
+    <option>Thornton</option>
+    <option>Kensington</option>
+    <option>Bellville</option>
+  </select>
+
+  <label>WhatsApp Number:</label>
+  <input type="tel" id="phone" placeholder="083 326 6304" value="083 326 6304">
+
+  <label>Search Product (e.g. milk, boerewors):</label>
+  <input type="text" id="search" placeholder="Type here..." onkeyup="searchProducts()">
+
+  <div id="results"></div>
+
+  <div id="selected" style="margin-top:20px"></div>
+
+  <button onclick="saveList()">Save My 20 Items & Get Alerts</button>
+
+  <script>
+    const products = ["Clover Full Cream Milk 2L", "DairyBelle Low Fat Milk", "Boerewors 1kg", "White Bread Loaf", "Eggs 6 Pack", "Chicken Drumsticks"];
+    
+    let selectedItems = [];
+
+    function searchProducts() {
+      const query = document.getElementById("search").value.toLowerCase();
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = "";
+
+      if (query.length < 2) return;
+
+      const matches = products.filter(p => p.toLowerCase().includes(query));
+      matches.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "item";
+        div.innerHTML = item + ' <button onclick="addItem(\'' + item + '\')">Add</button>';
+        resultsDiv.appendChild(div);
+      });
+    }
+
+    function addItem(item) {
+      if (selectedItems.length >= 20) {
+        alert("Maximum 20 items");
+        return;
+      }
+      if (!selectedItems.includes(item)) {
+        selectedItems.push(item);
+        renderSelected();
+      }
+    }
+
+    function renderSelected() {
+      const div = document.getElementById("selected");
+      div.innerHTML = "<h3>Your List (" + selectedItems.length + "/20)</h3>";
+      selectedItems.forEach(item => {
+        div.innerHTML += `<div class="item">${item}</div>`;
+      });
+    }
+
+    function saveList() {
+      const area = document.getElementById("area").value;
+      const phone = document.getElementById("phone").value;
+      alert("List saved for " + area + "! We will start sending specials to " + phone);
+      // In real version this would send to Google Sheets
+    }
+  </script>
+</body>
+</html>
