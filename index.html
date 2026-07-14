@@ -3,54 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chop Search - Goodwood Specials</title>
+  <title>Chop Search - Shop Smart</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f8f9fa; }
-    h1 { color: #28a745; text-align: center; margin-bottom: 5px; }
-    p { text-align: center; color: #555; }
-    label { display: block; margin: 15px 0 5px; font-weight: bold; }
-    input, select, button { width: 100%; padding: 14px; margin-bottom: 15px; font-size: 16px; border-radius: 8px; border: 1px solid #ddd; }
-    button { background: #28a745; color: white; border: none; font-weight: bold; }
-    .item { padding: 12px; background: white; margin: 8px 0; border-radius: 8px; border-left: 4px solid #28a745; }
-    #results { max-height: 300px; overflow-y: auto; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; background: #f5f5f5; }
+    header { background: white; padding: 15px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    h1 { margin: 0; color: #1e88e5; font-size: 24px; }
+    .subtitle { color: #666; font-size: 14px; }
+    .container { padding: 15px; }
+    .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; }
+    button { width: 100%; padding: 14px; background: #1e88e5; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; }
+    .result-item { display: flex; align-items: center; background: white; padding: 12px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .store-logo { width: 50px; height: 50px; background: #eee; border-radius: 8px; margin-right: 15px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #333; }
+    .price { font-size: 20px; font-weight: bold; color: #2e7d32; }
   </style>
 </head>
 <body>
-  <h1>🍖 Chop Search</h1>
-  <p>Cheapest prices in your area</p>
+  <header>
+    <h1>🛒 Chop Search</h1>
+    <p class="subtitle">Shop Smart • Goodwood & surrounds</p>
+  </header>
 
-  <label>Your Suburb:</label>
-  <select id="area">
-    <option>Goodwood</option>
-    <option>Parow</option>
-    <option>Thornton</option>
-    <option>Kensington</option>
-    <option>Bellville</option>
-    <option>Durbanville</option>
-    <option>Plattekloof</option>
-    <option>Struisbaai</option>
-  </select>
+  <div class="container">
+    <div class="card">
+      <label>Your Suburb</label>
+      <select id="area">
+        <option>Goodwood</option>
+        <option>Parow</option>
+        <option>Thornton</option>
+        <option>Kensington</option>
+        <option>Bellville</option>
+        <option>Durbanville</option>
+        <option>Plattekloof</option>
+        <option>Struisbaai</option>
+      </select>
 
-  <label>WhatsApp Number:</label>
-  <input type="tel" id="phone" placeholder="083 326 6304" value="083 326 6304">
+      <label>WhatsApp Number</label>
+      <input type="tel" id="phone" value="083 326 6304">
+    </div>
 
-  <label>Search Product (e.g. milk, boerewors, bread):</label>
-  <input type="text" id="search" placeholder="Type here..." onkeyup="searchProducts()">
+    <input type="text" id="search" placeholder="Search product (milk, boerewors...)" onkeyup="searchProducts()" style="padding:15px;font-size:16px;">
 
-  <div id="results"></div>
+    <div id="results"></div>
 
-  <div id="selected" style="margin-top:20px"></div>
-
-  <button onclick="saveList()">Save My List & Get Alerts</button>
+    <button onclick="saveList()">Save List & Get Daily Alerts</button>
+  </div>
 
   <script>
-    const products = [
-      "Clover Full Cream Milk 2L", "DairyBelle Low Fat Milk 1L", "Boerewors 1kg", 
-      "White Bread Loaf", "Eggs 6 Pack", "Chicken Drumsticks 1kg", "Rice 2kg",
-      "Potatoes 7kg", "Apples 1kg", "Bananas bunch"
-    ];
-    
-    let selectedItems = [];
+    const products = ["Clover Full Cream Milk", "DairyBelle Milk", "Boerewors", "White Bread", "Eggs", "Chicken", "Rice", "Potatoes"];
 
     function searchProducts() {
       const query = document.getElementById("search").value.toLowerCase().trim();
@@ -59,44 +59,22 @@
 
       if (query.length < 2) return;
 
-      const matches = products.filter(p => p.toLowerCase().includes(query));
-      matches.forEach(item => {
-        const div = document.createElement("div");
-        div.className = "item";
-        div.innerHTML = `${item} <button onclick="addItem('${item}')" style="float:right;">Add</button>`;
-        resultsDiv.appendChild(div);
-      });
-    }
-
-    function addItem(item) {
-      if (selectedItems.length >= 20) {
-        alert("Maximum 20 items for now");
-        return;
-      }
-      if (!selectedItems.includes(item)) {
-        selectedItems.push(item);
-        renderSelected();
-      }
-    }
-
-    function renderSelected() {
-      const div = document.getElementById("selected");
-      div.innerHTML = `<h3>Your List (${selectedItems.length}/20)</h3>`;
-      selectedItems.forEach((item, index) => {
-        div.innerHTML += `<div class="item">${item} <button onclick="removeItem(${index})" style="float:right;color:red;">Remove</button></div>`;
-      });
-    }
-
-    function removeItem(index) {
-      selectedItems.splice(index, 1);
-      renderSelected();
+      // Mock results like your screenshot
+      resultsDiv.innerHTML = `
+        <div class="result-item">
+          <div class="store-logo" style="background:#4caf50;color:white;">C</div>
+          <div style="flex:1">
+            <strong>Checkers</strong><br>
+            <span class="price">R22.99</span> <small>Rice 2kg</small>
+          </div>
+          <div style="text-align:right"><small>2.1 km</small></div>
+        </div>
+        <!-- Add more cards here later -->
+      `;
     }
 
     function saveList() {
-      const area = document.getElementById("area").value;
-      const phone = document.getElementById("phone").value;
-      alert(`✅ List saved for ${area}!\n\nWe will notify you on WhatsApp (${phone}) when your items are on special.`);
-      // Later: send to Google Sheets
+      alert("✅ List saved! We'll send you the best prices daily via WhatsApp.");
     }
   </script>
 </body>
