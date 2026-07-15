@@ -53,13 +53,13 @@
       <div class="emoji">🥛</div>
       <div class="product-name">Full Cream Milk 2L</div>
       <div class="price">R26.99</div>
-      <button class="add-btn" onclick="addItem('Full Cream Milk 2L')">Add</button>
+      <button class="add-btn" onclick="addItem('Full Cream Milk 2L', 26.99)">Add</button>
     </div>
     <div class="product-card">
       <div class="emoji">🥛</div>
       <div class="product-name">Low Fat Milk 1L</div>
       <div class="price">R18.99</div>
-      <button class="add-btn" onclick="addItem('Low Fat Milk 1L')">Add</button>
+      <button class="add-btn" onclick="addItem('Low Fat Milk 1L', 18.99)">Add</button>
     </div>
   </div>
 </div>
@@ -71,7 +71,7 @@
       <div class="emoji">🌭</div>
       <div class="product-name">Boerewors 1kg</div>
       <div class="price">R64.99</div>
-      <button class="add-btn" onclick="addItem('Boerewors 1kg')">Add</button>
+      <button class="add-btn" onclick="addItem('Boerewors 1kg', 64.99)">Add</button>
     </div>
   </div>
 </div>
@@ -87,15 +87,23 @@
 <script>
   let selectedItems = [];
   const allProducts = [
-    "Full Cream Milk 2L", "Low Fat Milk 1L", "Boerewors 1kg", 
-    "Chicken Drumsticks 1kg", "White Bread 700g", "Brown Bread 700g",
-    "Coca-Cola 2L", "Fanta Orange 2L", "Rice 2kg", "Eggs 6 Pack"
+    { name: "Full Cream Milk 2L", price: 26.99 },
+    { name: "Low Fat Milk 1L", price: 18.99 },
+    { name: "Boerewors 1kg", price: 64.99 },
+    { name: "Chicken Drumsticks 1kg", price: 54.99 },
+    { name: "White Bread 700g", price: 16.99 },
+    { name: "Brown Bread 700g", price: 17.99 },
+    { name: "Coca-Cola 2L", price: 24.99 },
+    { name: "Fanta Orange 2L", price: 22.99 },
+    { name: "Rice 2kg", price: 29.99 },
+    { name: "Eggs 6 Pack", price: 32.99 }
   ];
 
-  function addItem(item) {
+  function addItem(name, price) {
     if (selectedItems.length >= 20) return alert("Maximum 20 items");
-    if (!selectedItems.includes(item)) {
-      selectedItems.push(item);
+    const exists = selectedItems.find(item => item.name === name);
+    if (!exists) {
+      selectedItems.push({ name, price });
       renderSelected();
     }
   }
@@ -109,7 +117,7 @@
     selectedItems.forEach((item, i) => {
       container.innerHTML += `
         <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #eee;">
-          <span>${item}</span>
+          <span>${item.name} - R${item.price}</span>
           <button onclick="removeItem(${i})" style="color:red; border:none; background:none; font-size:20px;">×</button>
         </div>`;
     });
@@ -129,7 +137,7 @@
       return;
     }
 
-    const matches = allProducts.filter(p => p.toLowerCase().includes(query));
+    const matches = allProducts.filter(p => p.name.toLowerCase().includes(query));
 
     if (matches.length === 0) {
       resultsDiv.innerHTML = "<p style='padding:10px;'>No matches found</p>";
@@ -141,8 +149,11 @@
     matches.forEach(item => {
       html += `
         <div class="result-item">
-          <span>${item}</span>
-          <button onclick="addItem('${item}'); document.getElementById('search').value=''; document.getElementById('search-results').style.display='none';" 
+          <div>
+            <strong>${item.name}</strong><br>
+            <span style="color:#2e7d32; font-weight:bold;">R${item.price}</span>
+          </div>
+          <button onclick="addItem('${item.name}', ${item.price}); document.getElementById('search').value=''; document.getElementById('search-results').style.display='none';" 
                   style="background:#1e88e5; color:white; border:none; padding:6px 14px; border-radius:6px;">Add</button>
         </div>`;
     });
@@ -154,7 +165,7 @@
   function saveList() {
     const area = document.getElementById("area").value;
     const phone = document.getElementById("phone").value.trim();
-    const listStr = selectedItems.join(" | ");
+    const listStr = selectedItems.map(i => `${i.name} (R${i.price})`).join(" | ");
 
     if (!phone || phone.length < 10) {
       alert("Please enter your WhatsApp number");
