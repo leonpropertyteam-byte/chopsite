@@ -5,98 +5,169 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chop Search</title>
   <style>
-    body { font-family: -apple-system, sans-serif; margin:0; padding:15px; background:#f5f5f5; }
-    header { text-align:center; padding:15px; background:white; border-radius:12px; margin-bottom:15px; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
-    h1 { margin:0; color:#1e88e5; }
-    .card { background:white; padding:15px; border-radius:12px; margin-bottom:15px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+    body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; margin:0; padding:0; background:#f4f4f4; }
+    header { background:white; padding:15px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+    h1 { margin:0; color:#1e88e5; font-size:26px; }
+    .section { margin:20px 15px; }
+    .category-title { font-size:18px; font-weight:bold; margin-bottom:10px; color:#333; }
+    .product-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap:12px; }
+    .product-card { background:white; border-radius:12px; padding:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08); text-align:center; }
+    .product-card .emoji { font-size:42px; margin-bottom:8px; }
+    .product-name { font-weight:600; font-size:14px; margin:6px 0; }
+    .price { color:#2e7d32; font-weight:bold; font-size:16px; }
+    button.add-btn { background:#1e88e5; color:white; border:none; padding:8px 16px; border-radius:8px; font-size:14px; margin-top:8px; width:100%; }
+    .selected-list { background:white; padding:15px; margin:15px; border-radius:12px; }
     input, select { width:100%; padding:12px; margin:8px 0; border:1px solid #ddd; border-radius:8px; font-size:16px; }
-    button { width:100%; padding:15px; background:#1e88e5; color:white; border:none; border-radius:8px; font-size:17px; font-weight:bold; }
-    .result { padding:12px; background:white; margin:8px 0; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+    .save-btn { background:#28a745; color:white; padding:16px; font-size:18px; font-weight:bold; border:none; border-radius:10px; width:100%; margin:15px 0; }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🛒 Chop Search</h1>
-    <p>Find the cheapest specials near you</p>
-  </header>
 
-  <div class="card">
-    <label>Your Suburb</label>
-    <select id="area">
-      <option>Goodwood</option><option>Parow</option><option>Thornton</option>
-      <option>Kensington</option><option>Bellville</option><option>Durbanville</option>
-      <option>Plattekloof</option><option>Struisbaai</option>
-    </select>
+<header>
+  <h1>🛒 Chop Search</h1>
+  <p style="margin:5px 0 0;">Cheapest prices near you</p>
+</header>
 
-    <label>WhatsApp Number</label>
-    <input type="tel" id="phone" value="083 326 6304">
+<div style="padding:15px;">
+  <select id="area">
+    <option>Goodwood</option><option>Parow</option><option>Thornton</option>
+    <option>Kensington</option><option>Bellville</option><option>Durbanville</option>
+    <option>Plattekloof</option><option>Struisbaai</option>
+  </select>
+  <input type="tel" id="phone" value="083 326 6304" placeholder="Your WhatsApp number">
+</div>
+
+<input type="text" id="search" placeholder="Search products..." onkeyup="searchProducts()" style="margin:0 15px 15px; padding:14px;">
+
+<!-- MILK & DAIRY -->
+<div class="section">
+  <div class="category-title">🥛 Milk & Dairy</div>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="emoji">🥛</div>
+      <div class="product-name">Full Cream Milk 2L</div>
+      <div class="price">R26.99</div>
+      <button class="add-btn" onclick="addItem('Full Cream Milk 2L')">Add</button>
+    </div>
+    <div class="product-card">
+      <div class="emoji">🥛</div>
+      <div class="product-name">Low Fat Milk 1L</div>
+      <div class="price">R18.99</div>
+      <button class="add-btn" onclick="addItem('Low Fat Milk 1L')">Add</button>
+    </div>
   </div>
+</div>
 
-  <input type="text" id="search" placeholder="Search product (milk, boerewors, rice...)" onkeyup="searchProducts()" style="padding:15px;font-size:16px;">
+<!-- MEAT & BRAAI -->
+<div class="section">
+  <div class="category-title">🥩 Meat & Braai</div>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="emoji">🌭</div>
+      <div class="product-name">Boerewors 1kg</div>
+      <div class="price">R64.99</div>
+      <button class="add-btn" onclick="addItem('Boerewors 1kg')">Add</button>
+    </div>
+    <div class="product-card">
+      <div class="emoji">🍗</div>
+      <div class="product-name">Chicken Drumsticks 1kg</div>
+      <div class="price">R54.99</div>
+      <button class="add-btn" onclick="addItem('Chicken Drumsticks 1kg')">Add</button>
+    </div>
+  </div>
+</div>
 
-  <div id="results"></div>
+<!-- BAKERY -->
+<div class="section">
+  <div class="category-title">🍞 Bakery</div>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="emoji">🍞</div>
+      <div class="product-name">White Bread 700g</div>
+      <div class="price">R16.99</div>
+      <button class="add-btn" onclick="addItem('White Bread 700g')">Add</button>
+    </div>
+    <div class="product-card">
+      <div class="emoji">🍞</div>
+      <div class="product-name">Brown Bread 700g</div>
+      <div class="price">R17.99</div>
+      <button class="add-btn" onclick="addItem('Brown Bread 700g')">Add</button>
+    </div>
+  </div>
+</div>
+
+<!-- BEVERAGES -->
+<div class="section">
+  <div class="category-title">🥤 Beverages</div>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="emoji">🥤</div>
+      <div class="product-name">Coca-Cola 2L</div>
+      <div class="price">R24.99</div>
+      <button class="add-btn" onclick="addItem('Coca-Cola 2L')">Add</button>
+    </div>
+    <div class="product-card">
+      <div class="emoji">🥤</div>
+      <div class="product-name">Fanta Orange 2L</div>
+      <div class="price">R22.99</div>
+      <button class="add-btn" onclick="addItem('Fanta Orange 2L')">Add</button>
+    </div>
+  </div>
+</div>
+
+<!-- SELECTED ITEMS -->
+<div class="selected-list">
+  <h3>Your List (<span id="count">0</span>/20)</h3>
   <div id="selected"></div>
+</div>
 
-  <button onclick="saveList()">Save List & Get Alerts</button>
+<button class="save-btn" onclick="saveList()">Save List & Send via WhatsApp</button>
 
-  <script>
-    // Much bigger product list
-    const products = [
-      "Clover Full Cream Milk 2L", "DairyBelle Low Fat Milk 1L", "Long Life Milk 1L",
-      "Boerewors 1kg", "Beef Mince 500g", "Chicken Drumsticks 1kg", "Whole Chicken",
-      "White Bread Loaf", "Brown Bread", "Eggs 6 Pack", "Eggs 30 Pack",
-      "Rice 2kg", "Jungle Oats 1kg", "Potatoes 7kg Bag", "Onions 2kg",
-      "Apples 1kg", "Bananas", "Tomatoes 1kg", "Cabbage", "Carrots 1kg",
-      "Sunflower Oil 750ml", "Sugar 2.5kg", "Iwisa Maize Meal 5kg",
-      "Lucky Star Pilchards", "Koo Baked Beans", "Peanut Butter 400g",
-      "Mrs Balls Chutney", "Coca Cola 2L", "Fanta 2L"
-    ];
+<script>
+  let selectedItems = [];
 
-    let selectedItems = [];
-
-    function searchProducts() {
-      const query = document.getElementById("search").value.toLowerCase().trim();
-      const resultsDiv = document.getElementById("results");
-      resultsDiv.innerHTML = "";
-
-      if (query.length < 2) return;
-
-      const matches = products.filter(p => p.toLowerCase().includes(query));
-      matches.forEach(item => {
-        const div = document.createElement("div");
-        div.className = "result";
-        div.innerHTML = `${item} <button onclick="addItem('${item}')" style="float:right;padding:5px 10px;">Add</button>`;
-        resultsDiv.appendChild(div);
-      });
-    }
-
-    function addItem(item) {
-      if (selectedItems.length >= 20) return alert("Max 20 items");
-      if (!selectedItems.includes(item)) {
-        selectedItems.push(item);
-        renderSelected();
-      }
-    }
-
-    function renderSelected() {
-      const div = document.getElementById("selected");
-      div.innerHTML = `<h3>Your List (${selectedItems.length}/20)</h3>`;
-      selectedItems.forEach((item, i) => {
-        div.innerHTML += `<div class="result">${item} <button onclick="removeItem(${i})" style="color:red;float:right;">×</button></div>`;
-      });
-    }
-
-    function removeItem(i) {
-      selectedItems.splice(i, 1);
+  function addItem(item) {
+    if (selectedItems.length >= 20) return alert("Max 20 items");
+    if (!selectedItems.includes(item)) {
+      selectedItems.push(item);
       renderSelected();
     }
+  }
 
-    function saveList() {
-      const area = document.getElementById("area").value;
-      const phone = document.getElementById("phone").value;
-      const msg = `New Chop List from ${area}\nItems: ${selectedItems.join(", ")}`;
-      window.location.href = `https://wa.me/27833266304?text=${encodeURIComponent(msg)}`;
+  function renderSelected() {
+    const container = document.getElementById("selected");
+    const count = document.getElementById("count");
+    container.innerHTML = "";
+    count.innerText = selectedItems.length;
+
+    selectedItems.forEach((item, i) => {
+      container.innerHTML += `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #eee;">
+          <span>${item}</span>
+          <button onclick="removeItem(${i})" style="color:red;border:none;background:none;font-size:18px;">×</button>
+        </div>`;
+    });
+  }
+
+  function removeItem(i) {
+    selectedItems.splice(i, 1);
+    renderSelected();
+  }
+
+  function searchProducts() {
+    // Simple search - can be expanded later
+    const query = document.getElementById("search").value.toLowerCase();
+    if (query.length < 2) return;
+    // For now just alert matching items (we can improve)
+    alert("Search feature coming in next version. Use categories for now.");
+  }
+
+  function saveList() {
+    const area = document.getElementById("area").value;
+    const phone = document.getElementById("phone").value.trim();
+    const listStr = selectedItems.join(" | ");
+
+    if (!phone || phone.length < 10) {
+      alert("Please enter your WhatsApp number");
+      return;
     }
-  </script>
-</body>
-</html>
