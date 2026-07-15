@@ -36,7 +36,9 @@
   <input type="tel" id="phone" value="083 326 6304">
 </div>
 
-<input type="text" id="search" placeholder="Search products..." onkeyup="liveSearch()" style="margin:15px; padding:14px;">
+<input type="text" id="search" placeholder="Search products..." 
+       onkeyup="liveSearch()" autocomplete="off" 
+       style="margin:15px; padding:14px; width: calc(100% - 30px);">
 
 <div id="search-results" class="search-results" style="display:none;"></div>
 
