@@ -1,0 +1,56 @@
+Timestamp,Product_Name,Brand,Size,Category,Store,Location,Regular_Price,Special_Price,Discount_Percent,Valid_From,Valid_Until,Combo_Notes,Product_URL,Key Features
+2026/07/08,Full Cream Fresh Milk 2L,PNP,2L,Milk,Pick n Pay,Goodwood,29.99,27.99,7,2026/07/06,2026/07/12,,https://www.pnp.co.za,
+2026/07/08,Full Cream Fresh Milk 2L,Checkers,2L,Milk,Checkers,Goodwood,28.99,26.99,7,2026/07/06,2026/07/12,, ,
+2026/07/08,Boerewors 1kg,PNP,1kg,Meat,Pick n Pay,Goodwood,79.99,69.99,13,2026/07/06,2026/07/12,Braai special,,
+2026/07/08,Boerewors 1kg,Checkers,1kg,Meat,Checkers,Goodwood,74.99,64.99,13,2026/07/06,2026/07/12,, ,
+2026/07/08,Ricoffy 250g,Jacobs,250g,Coffee,Pick n Pay,Goodwood,52.99,44.99,15,2026/07/06,2026/07/12,, ,
+2026/07/08,White Bread 700g,Albany,700g,Bread,Pick n Pay,Goodwood,18.99,16.99,11,2026/07/06,2026/07/12,, ,
+2026/07/08,Castle Lager 6x330ml,Castle,6x330ml,Beer,Pick n Pay,Goodwood,89.99,79.99,11,2026/07/06,2026/07/12,, ,
+,SASKO More Slices White Bread,SASKO,700g,bread,,,,,,,,,,Fortified with vitamins & minerals
+,SASKO More Slices Brown Bread,SASKO,700g,bread,,,,,,,,,,Source of dietary fibre
+,SASKO Premium Slices White Bread,SASKO,700g,bread,,,,,,,,,,"Thicker, fortified sandwich slices"
+,SASKO Premium Slices Brown Bread,SASKO,700g,bread,,,,,,,,,,"Hearty, source of dietary fibre"
+,SASKO Low GI Whole Wheat Brown Bread,SASKO,800g,bread,,,,,,,,,,"Low GI, high fibre, cholesterol-free"
+,SASKO Low GI Speciality Oats & Honey White Bread,SASKO,800g,bread,,,,,,,,,,Specialized slow-release energy white bread
+,SASKO Low GI Dumpy Seeded Whole Wheat Brown Bread,SASKO,800g,bread,,,,,,,,,,"Seeded, slow-release energy"
+,Albany Superior White Bread,Albany,700g,bread,,,,,,,,,,"Extra soft, stays fresh longer"
+,Albany Superior Brown Bread,Albany,700g,bread,,,,,,,,,,"Wholesome, soft and tasty"
+,Albany Superior Thick Slice White Bread,Albany,700g,bread,,,,,,,,,,Thickly cut for toasting
+,Albany Superior Thick Slice Brown Bread,Albany,700g,bread,,,,,,,,,,"Thickly cut, high-fibre toast slices"
+,Albany Everyday White Bread,Albany,700g,bread,,,,,,,,,,"Budget-friendly everyday bread, low in fat"
+,Albany Everyday Brown Bread,Albany,700g,bread,,,,,,,,,,"Budget-friendly, high in fibre"
+,Albany Low G.I. Sliced White Bread Loaf,Albany,700g,bread,,,,,,,,,,Clinically tested Low GI white bread
+,Albany Low GI Wholewheat Brown Bread,Albany,800g,bread,,,,,,,,,,"High fibre, low glycemic index"
+,Albany Low GI Seeded Brown Bread,Albany,700g,bread,,,,,,,,,,Topped with grains and seeds
+,Albany Superior Best of Both White Bread,Albany,700g,bread,,,,,,,,,,White bread look and taste with high fibre benefits
+,Albany Low GI Ultima Brown Bread,Albany,500g,bread,,,,,,,,,,Kilojoule-controlled dietary loaf
+,Blue Ribbon Classic White Bread,Blue Ribbon,700g,bread,,,,,,,,,,Iconic soft white sandwich loaf
+,Blue Ribbon Classic Brown Bread,Blue Ribbon,700g,bread,,,,,,,,,,Soft brown everyday bread
+,Blue Ribbon Sliced White Bread,Blue Ribbon,700g,bread,,,,,,,,,,"Source of Vitamin D, highly versatile"
+,Blue Ribbon Sliced Brown Bread,Blue Ribbon,700g,bread,,,,,,,,,,"High in fiber, source of Vitamin D"
+,Blue Ribbon Toaster White Bread,Blue Ribbon,700g,bread,,,,,,,,,,Perfect for toaster slots
+,Blue Ribbon Duo High Fibre White Bread,Blue Ribbon,700g,bread,,,,,,,,,,White bread with the fibre of brown bread
+,Blue Ribbon Wholewheat Brown Bread,Blue Ribbon,800g,bread,,,,,,,,,,"Coarse texture, very high fibre"
+,PnP White Bread,Pick n Pay,600g,bread,,,,,,,,,,Supermarket value-tier white bread
+,PnP Brown Bread,Pick n Pay,600g,bread,,,,,,,,,,Supermarket value-tier brown bread
+,The Bakery White Bread Loaf,Checkers,700g,bread,,,,,,,,,,Fresh in-store baked white bread
+,The Bakery Brown Bread Loaf,Checkers,700g,bread,,,,,,,,,,Fresh in-store baked brown bread
+,Coca-Cola Original Taste Less Sugar Soft Drink,Coca-Cola,440ml,sofdrinks,,,,,,,,,,The iconic original sweet cola recipe
+,Coca-Cola Original Taste Less Sugar Soft Drink,Coca-Cola,2L,sofdrinks,,,,,,,,,,The iconic original sweet cola recipe
+,Coca-Cola No Sugar Soft Drink,Coca-Cola,440ml,sofdrinks,,,,,,,,,,"Zero sugar, zero calories, original taste profile"
+,Coca-Cola No Sugar Soft Drink,Coca-Cola,2L,sofdrinks,,,,,,,,,,"Zero sugar, zero calories, original taste profile"
+,Coca-Cola Light Soft Drink,Coca-Cola,440ml,sofdrinks,,,,,,,,,,Low kilojoule diet drink with a lighter profile
+,Fanta Orange Soft Drink,Fanta,440ml,sofdrinks,,,,,,,,,,Vibrant orange-flavored carbonated drink
+,Fanta Orange Soft Drink,Fanta,2L,sofdrinks,,,,,,,,,,Vibrant orange-flavored carbonated drink
+,Sprite Lemon-Lime Soft Drink,Sprite,440ml,sofdrinks,,,,,,,,,,"Crisp, clean lemon-lime flavored drink"
+,Sprite Lemon-Lime Soft Drink,Sprite,2L,sofdrinks,,,,,,,,,,"Crisp, clean lemon-lime flavored drink"
+,Stoney Ginger Beer,Stoney,440ml,sofdrinks,,,,,,,,,,Spicy ginger beer with a powerful throat kick
+,Stoney Ginger Beer,Stoney,2L,sofdrinks,,,,,,,,,,Spicy ginger beer with a powerful throat kick
+,Sparletta Creme Soda Soft Drink,Sparletta,2L,sofdrinks,,,,,,,,,,The iconic sweet bright-green favorite
+,Sparletta Sparberry Soft Drink,Sparletta,2L,sofdrinks,,,,,,,,,,Classic raspberry-flavored sweet soft drink
+,Sparletta Iron Brew Soft Drink,Sparletta,2L,sofdrinks,,,,,,,,,,A dark-golden berry and caramel flavored soda
+,Schweppes Tonic Water Mixer,Schweppes,1L,sofdrinks,,,,,,,,,,Classic bitter-sweet tonic water with quinine
+,Schweppes Dry Lemon Soft Drink,Schweppes,1L,sofdrinks,,,,,,,,,,Tangy and refreshing lemon drink
+,Appletiser 100% Sparkling Apple Juice,Appletiser,750ml,sofdrinks,,,,,,,,,,Premium sparkling apple juice with no added sugar
+,Powerade Mountain Blast Sports Drink,Powerade,500ml,sofdrinks,,,,,,,,,,Isotonic sports drink formulated with electrolytes
+,Valpré Still Spring Water,Valpré,500ml,sofdrinks,,,,,,,,,,Premium natural spring water bottled at source
