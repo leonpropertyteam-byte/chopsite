@@ -7,28 +7,18 @@
   <style>
     body { font-family: -apple-system, sans-serif; margin:0; padding:0; background:#f4f4f4; }
     header { background:white; padding:20px 15px; text-align:center; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
-    .product-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap:12px; padding:0 15px; }
-    .product-card { background:white; border-radius:12px; padding:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08); text-align:center; }
-    .emoji { font-size:42px; margin-bottom:8px; }
-    .product-name { font-weight:600; font-size:14px; margin:6px 0; }
-    .details { font-size:12px; color:#666; }
-    .price { color:#2e7d32; font-weight:bold; font-size:16px; margin:6px 0; }
-    .add-btn { background:#1e88e5; color:white; border:none; padding:8px 16px; border-radius:8px; font-size:14px; width:100%; }
     .search-results { background:white; margin:0 15px 15px; border-radius:12px; padding:10px; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
-    .result-item { padding:12px; border-bottom:1px solid #eee; }
-    .result-item:last-child { border-bottom:none; }
+    .result-item { padding:12px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center; }
     input, select { width:100%; padding:12px; margin:8px 0; border:1px solid #ddd; border-radius:8px; font-size:16px; }
     .save-btn { background:#28a745; color:white; padding:16px; font-size:18px; font-weight:bold; border:none; border-radius:10px; width:100%; margin:15px 0; }
   </style>
 </head>
 <body>
 
-<!-- Shopwise SA Header -->
 <header>
   <div style="display:flex; align-items:center; justify-content:center; gap:12px;">
-    <div style="width:52px; height:52px; background:#1e88e5; border-radius:50%; display:flex; align-items:center; justify-content:center; position:relative;">
+    <div style="width:52px; height:52px; background:#1e88e5; border-radius:50%; display:flex; align-items:center; justify-content:center;">
       <span style="color:white; font-size:32px; font-weight:bold;">✓</span>
-      <span style="position:absolute; font-size:22px; color:white; top:14px;">🛒</span>
     </div>
     <div style="text-align:left;">
       <div style="font-size:26px; font-weight:700; color:#1e3a8a;">Shopwise SA</div>
@@ -46,26 +36,10 @@
   <input type="tel" id="phone" value="083 326 6304">
 </div>
 
-<!-- LIVE SEARCH -->
 <input type="text" id="search" placeholder="Search products..." onkeyup="liveSearch()" style="margin:15px; padding:14px;">
 
 <div id="search-results" class="search-results" style="display:none;"></div>
 
-<!-- CATEGORIES (shortened for now) -->
-<div style="padding:0 15px 20px;">
-  <h3 style="margin-bottom:10px;">🥛 Milk & Dairy</h3>
-  <div class="product-grid">
-    <div class="product-card">
-      <div class="emoji">🥛</div>
-      <div class="product-name">Full Cream Milk 2L</div>
-      <div class="details">Clover • Pick n Pay</div>
-      <div class="price">R26.99</div>
-      <button class="add-btn" onclick="addItem('Full Cream Milk 2L', 26.99, 'Clover', 'Pick n Pay')">Add</button>
-    </div>
-  </div>
-</div>
-
-<!-- SELECTED LIST -->
 <div style="padding:0 15px;">
   <h3>Your List (<span id="count">0</span>/20)</h3>
   <div id="selected" style="background:white; padding:15px; border-radius:12px; margin-bottom:20px;"></div>
@@ -75,18 +49,41 @@
 
 <script>
   let selectedItems = [];
+  let allProducts = [];
 
-  // Rich product data with Store + Brand
-  const allProducts = [
-    { name: "Full Cream Milk 2L", price: 26.99, brand: "Clover", store: "Pick n Pay", size: "2L" },
-    { name: "Full Cream Milk 2L", price: 25.99, brand: "Checkers", store: "Checkers", size: "2L" },
-    { name: "Boerewors 1kg", price: 64.99, brand: "Checkers", store: "Checkers", size: "1kg" },
-    { name: "Boerewors 1kg", price: 69.99, brand: "PNP", store: "Pick n Pay", size: "1kg" },
-    { name: "White Bread 700g", price: 16.99, brand: "Albany", store: "Pick n Pay", size: "700g" },
-    { name: "Brown Bread 700g", price: 17.99, brand: "Albany", store: "Checkers", size: "700g" },
-    { name: "Coca-Cola 2L", price: 24.99, brand: "Coca-Cola", store: "Checkers", size: "2L" },
-    { name: "Rice 2kg", price: 29.99, brand: "Tastic", store: "Pick n Pay", size: "2kg" }
-  ];
+  async function loadCSV() {
+    try {
+      const response = await fetch('chop_search_daily_update.csv');
+      const text = await response.text();
+      const lines = text.trim().split('\n');
+      
+      // Skip header
+      for (let i = 1; i < lines.length; i++) {
+        const row = lines[i].split(',');
+        if (row.length < 9) continue;
+
+        const product = {
+          name: row[1]?.trim() || '',
+          brand: row[2]?.trim() || '',
+          size: row[3]?.trim() || '',
+          store: row[5]?.trim() || '',
+          price: parseFloat(row[8]) || 0
+        };
+
+        if (product.name && product.price > 0) {
+          allProducts.push(product);
+        }
+      }
+
+      console.log(`${allProducts.length} products loaded from CSV`);
+    } catch (e) {
+      console.error("Error loading CSV:", e);
+      // Fallback example data
+      allProducts = [
+        { name: "Full Cream Milk 2L", brand: "Clover", size: "2L", store: "Pick n Pay", price: 26.99 }
+      ];
+    }
+  }
 
   function addItem(name, price, brand, store) {
     if (selectedItems.length >= 20) return alert("Maximum 20 items");
@@ -105,12 +102,9 @@
 
     selectedItems.forEach((item, i) => {
       container.innerHTML += `
-        <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #eee; font-size:14px;">
-          <div>
-            <strong>${item.name}</strong> (${item.brand})<br>
-            <span style="color:#666;">${item.store} • R${item.price}</span>
-          </div>
-          <button onclick="removeItem(${i})" style="color:red; border:none; background:none; font-size:22px;">×</button>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee;font-size:14px;">
+          <div><strong>${item.name}</strong> (${item.brand})<br><span style="color:#666;">${item.store} • R${item.price}</span></div>
+          <button onclick="removeItem(${i})" style="color:red;border:none;background:none;font-size:22px;">×</button>
         </div>`;
     });
   }
@@ -124,14 +118,13 @@
     const query = document.getElementById("search").value.toLowerCase().trim();
     const resultsDiv = document.getElementById("search-results");
 
-    if (query.length < 2) {
+    if (query.length < 2 || allProducts.length === 0) {
       resultsDiv.style.display = "none";
       return;
     }
 
     const matches = allProducts.filter(p => 
-      p.name.toLowerCase().includes(query) || 
-      p.brand.toLowerCase().includes(query)
+      p.name.toLowerCase().includes(query) || p.brand.toLowerCase().includes(query)
     );
 
     if (matches.length === 0) {
@@ -146,13 +139,13 @@
         <div class="result-item">
           <div>
             <strong>${item.name}</strong> (${item.brand} ${item.size})<br>
-            <span style="color:#666; font-size:13px;">${item.store}</span><br>
-            <span style="color:#2e7d32; font-weight:bold; font-size:16px;">R${item.price}</span>
+            <span style="color:#666;">${item.store}</span><br>
+            <span style="color:#2e7d32; font-weight:bold;">R${item.price}</span>
           </div>
           <button onclick="addItem('${item.name}', ${item.price}, '${item.brand}', '${item.store}'); 
                            document.getElementById('search').value=''; 
                            document.getElementById('search-results').style.display='none';" 
-                  style="background:#1e88e5; color:white; border:none; padding:8px 14px; border-radius:6px; white-space:nowrap;">
+                  style="background:#1e88e5;color:white;border:none;padding:8px 14px;border-radius:6px;">
             Add
           </button>
         </div>`;
@@ -170,6 +163,12 @@
     const message = `🛒 Chop List\nFrom: ${phone}\nArea: ${area}\n${listStr}`;
     window.location.href = `https://wa.me/27833266304?text=${encodeURIComponent(message)}`;
   }
+
+  window.onload = async function() {
+    await loadCSV();
+    // Optional: show how many products loaded
+    console.log("App ready with", allProducts.length, "products");
+  };
 </script>
 
 </body>
